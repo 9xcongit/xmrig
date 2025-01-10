@@ -3,7 +3,7 @@ const { chromium } = require('playwright');
 (async () => {
   const browser = await chromium.launch({ headless: true }); // hoặc use firefox hoặc webkit
   const page = await browser.newPage();
-  await page.goto('https://www.thesmallflame.com');
+  await page.goto('https://deepnote9001.blogspot.com');
   console.log("Trang web đang mở và duy trì...");
 
   // Duy trì trang web mở 24 giờ
