@@ -1,32 +1,27 @@
-import time
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
+import sys
+from PyQt5.QtCore import QUrl
+from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5.QtWebEngineWidgets import QWebEngineView, QWebEnginePage
+from PyQt5.QtWebEngineCore import QWebEngineSettings
 
-# Cấu hình trình duyệt headless (có thể bỏ dòng này nếu muốn chạy với giao diện)
-chrome_options = Options()
-chrome_options.add_argument('--headless')  # Chạy headless (không hiển thị giao diện)
-chrome_options.add_argument('--no-sandbox')
-chrome_options.add_argument('--disable-dev-shm-usage')
+class WebEngineWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.browser = QWebEngineView()
+        self.browser.setUrl(QUrl("https://www.thesmallflame.com"))  # Thay đổi URL nếu cần
+        self.setCentralWidget(self.browser)
 
-# Khởi tạo trình duyệt cho website thứ nhất
-driver1 = webdriver.Chrome(options=chrome_options)
+        # Chế độ web đầy đủ, bật JavaScript
+        self.browser.page().settings().setAttribute(QWebEngineSettings.JavascriptEnabled, True)
 
-# URL trang chủ thứ nhất
-url1 = "https://www.thesmallflame.com"
-driver1.get(url1)
-print(f"Đang mở trang: {url1}")
+        # Tự động tải lại sau một khoảng thời gian nếu cần
+        self.setWindowTitle("24h Web Browser")
+        self.resize(1024, 768)
+        self.show()
 
-# Khởi tạo trình duyệt cho website thứ hai
-driver2 = webdriver.Chrome(options=chrome_options)
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    window = WebEngineWindow()
 
-# URL trang chủ thứ hai
-url2 = "https://ads.alexamaster.com/?id=182"  # Bạn có thể thay đổi URL này
-driver2.get(url2)
-print(f"Đang mở trang: {url2}")
-
-# Tạm dừng trong 24 giờ (24 * 60 * 60 giây) để giữ các trang này mở
-time.sleep(24 * 60 * 60)  # 24 giờ = 24 * 60 * 60 giây
-
-# Sau 24 giờ, trình duyệt sẽ tự động đóng
-driver1.quit()
-driver2.quit()
+    # Duy trì trang web mở 24 giờ
+    sys.exit(app.exec_())  # Chạy ứng dụng Qt cho đến khi đóng
