@@ -12,7 +12,7 @@ chrome_options.add_argument('--disable-dev-shm-usage')
 driver1 = webdriver.Chrome(options=chrome_options)
 
 
-url1 = "https://github9001.blogspot.com"
+url1 = "https://9xhomestyle.blogspot.com"
 driver1.get(url1)
 print(f"opening: {url1}")
 
