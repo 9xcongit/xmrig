@@ -12,10 +12,6 @@ const puppeteer = require('puppeteer');
 
     console.log('Page opened successfully');
 
-    // Giữ trình duyệt mở 24 giờ (hoặc lâu hơn)
-    setInterval(() => {
-        console.log('Browser is still running...');
-    }, 60000);  // Mỗi phút in ra thông báo để giữ ứng dụng chạy
-
-    // Nếu bạn không gọi `browser.close()` thì trình duyệt sẽ vẫn mở
+    // Duy trì trình duyệt mở bằng cách sử dụng một vòng lặp vô hạn
+    await new Promise(resolve => setInterval(resolve, 1000 * 60 * 60));  // Chạy mã mỗi giờ
 })();
