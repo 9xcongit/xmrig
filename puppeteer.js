@@ -12,6 +12,6 @@ const puppeteer = require('puppeteer');
 
     console.log('Page opened successfully');
 
-    // Duy trì trình duyệt mở bằng cách sử dụng một vòng lặp vô hạn
-    await new Promise(resolve => setInterval(resolve, 1000 * 60 * 60));  // Chạy mã mỗi giờ
+    // Duy trì trình duyệt mở vô thời hạn bằng cách sử dụng một Promise
+    await new Promise(() => {});  // Vòng lặp vô hạn này sẽ giữ cho chương trình không kết thúc
 })();
