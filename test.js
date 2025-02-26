@@ -9,13 +9,11 @@ async function run() {
   
   console.log('Trang web đã được mở thành công.');
 
-  // Giữ trang web mở mãi mãi, không reload và chờ 30 giây
-  console.log('Trang web sẽ mở và đợi 30 giây rồi tiếp tục.');
-
-  // Đảm bảo script không kết thúc bằng cách chờ 30 giây
-  await new Promise(resolve => setTimeout(resolve, 30000));  // Chờ 30 giây (30,000 mili-giây)
+  // Giữ trang web mở mãi mãi, không reload
+  console.log('Trang web sẽ mở mãi mãi cho đến khi bạn dừng tiến trình này.');
   
-  console.log('30 giây đã trôi qua.');
+  // Đảm bảo script không kết thúc bằng cách chờ vô thời hạn
+  await new Promise(() => {});  // Chờ mãi mãi, giữ script không kết thúc
 }
 
 run().catch(console.error);
