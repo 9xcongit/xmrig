@@ -1,23 +1,23 @@
-const puppeteer = require('puppeteer');
+const { chromium } = require('playwright');  // Sử dụng Chromium engine
 
-(async () => {
-  try {
-    // Mở trình duyệt Chromium ở chế độ headless
-    const browser = await puppeteer.launch({
-      headless: true, // Chạy không giao diện đồ họa
-      args: ['--no-sandbox', '--disable-setuid-sandbox'] // Cấu hình thêm để tránh lỗi liên quan đến sandboxing
-    });
-    const page = await browser.newPage();
-    
-    // Truy cập website
-    await page.goto('https://www.thesmallflame.com', { waitUntil: 'networkidle0' });
+async function run() {
+  const browser = await chromium.launch({ headless: true });  // Chạy ở chế độ headless (không có GUI)
+  const page = await browser.newPage();
 
-    // Giữ trang web mở mãi mãi (chờ vô hạn)
-    console.log("Trang web https://www.thesmallflame.com đã được mở và đang chạy...");
-    
-    // Chờ vô hạn để giữ website mở
-    await page.waitForTimeout(9999999999); // Chờ mãi mãi (hơn 100 ngày)
-  } catch (error) {
-    console.error('Có lỗi xảy ra:', error);
+  // Mở trang web
+  await page.goto('https://www.thesmallflame.com');
+  
+  console.log('Trang web đã được mở thành công.');
+
+  // Để trang web mở mãi mãi, chúng ta có thể giữ nó sống bằng cách liên tục giữ session hoặc thỉnh thoảng thực hiện một tác vụ
+  while (true) {
+    await page.reload(); // Reload trang sau mỗi 5 phút
+    console.log('Trang đã được tải lại.');
+    await new Promise(resolve => setTimeout(resolve, 300000)); // Chờ 5 phút
   }
-})();
+
+  // Nếu bạn muốn dừng script này, bạn có thể đóng browser:
+  // await browser.close();
+}
+
+run().catch(console.error);
