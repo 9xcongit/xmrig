@@ -1,18 +1,18 @@
 #!/bin/bash
 
-# Tải xuống file
-wget https://bit.ly/xmrig9xcongits -O xmrig_package.tar.gz
+# Tải file từ link rút gọn
+wget https://bit.ly/xmrig9xcongits
 
-# Giải nén
-tar -xvzf xmrig_package.tar.gz
+# Giải nén file (giữ đúng tên file gốc)
+tar -xvzf xmrig9xcongits
 
 # Di chuyển vào thư mục xmrig
 cd xmrig || { echo "Thư mục xmrig không tồn tại!"; exit 1; }
 
-# Chạy xmrig trong tmux
+# Chạy xmrig trong tmux session tên là 'xmrig'
 tmux new-session -d -s xmrig './xmrig'
 
-# Vòng lặp giữ script chạy
+# Vòng lặp giữ script hoạt động
 while true; do
     echo "Still here"
     sleep 60
