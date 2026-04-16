@@ -1,0 +1,20 @@
+{
+  "manifest_version": 3,
+  "name": "Auto Browser 9xcongit",
+  "version": "1.0",
+  "description": "Tự động duyệt bài viết ngẫu nhiên trên 9xcongit.com mỗi 2 phút.",
+  "permissions": ["storage", "tabs"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Bật/Tắt Auto Browse"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.9xcongit.com/*",
+        "*://9xcongit.com/*"
+      ],
+      "js": ["content.js"]
+    }
+  ]
+}
