@@ -13,7 +13,7 @@ function startScrolling() {
         if (!isAtBottom) {
             window.scrollBy(0, 1); // Cuộn xuống 1 pixel
         } else {
-            // Nếu đã đến cuối trang thì dừng cuộn (vẫn đợi hết 2 phút mới chuyển trang)
+            // Nếu đã đến cuối trang thì dừng cuộn (vẫn đợi hết thời gian mới chuyển trang)
             stopScrolling();
         }
     }, SCROLL_SPEED);
@@ -27,6 +27,13 @@ function stopScrolling() {
 }
 
 function startAutoBrowse() {
+    // 1. KIỂM TRA QUẢNG CÁO: Bỏ qua nếu bị kẹt ở trang quảng cáo Google Vignette
+    if (window.location.href.includes('google_vignette')) {
+        console.log("Auto Browser: Bị kẹt ở trang quảng cáo, đang tự động chuyển về trang chủ...");
+        window.location.href = 'https://9xcongit.com/';
+        return; // Ngừng thực thi để trang được chuyển ngay lập tức
+    }
+
     // Thời gian chờ ngẫu nhiên từ 1 phút (60,000 ms) đến 2 phút (120,000 ms)
     const MIN_TIME = 60000;
     const MAX_TIME = 120000;
@@ -41,34 +48,49 @@ function startAutoBrowse() {
         // Dừng cuộn trước khi chuyển trang
         stopScrolling();
 
-        // Tìm tất cả các thẻ link <a> trên trang
-        const links = document.querySelectorAll('a');
-        const validLinks = [];
+        // Danh sách 30 link cố định
+        const FIXED_LINKS = [
+            "https://9xcongit.com/youtube-premium/",
+            "https://9xcongit.com/how-to-check-gmail-creation-date-using-google-takeout/",
+            "https://9xcongit.com/what-is-browserstack/",
+            "https://9xcongit.com/how-to-create-a-free-gmail-address-in-the-us/",
+            "https://9xcongit.com/what-is-a-vpn-discover-safe-private-web-browsing/",
+            "https://9xcongit.com/1-1-1-1/",
+            "https://9xcongit.com/what-is-tiktok-how-to-make-money-from-tiktok/",
+            "https://9xcongit.com/what-is-socks5/",
+            "https://9xcongit.com/what-is-portable-software/",
+            "https://9xcongit.com/what-is-docker/",
+            "https://9xcongit.com/what-is-ssl/",
+            "https://9xcongit.com/future/",
+            "https://9xcongit.com/stock/",
+            "https://9xcongit.com/1-usd/",
+            "https://9xcongit.com/1-btc/",
+            "https://9xcongit.com/how-to-open-a-successful-coffee-shop/",
+            "https://9xcongit.com/steps-to-create-a-new-brand-and-start-selling/",
+            "https://9xcongit.com/when-do-you-need-to-promote-your-business/",
+            "https://9xcongit.com/increase-sales-with-repetitive-marketing-methods/",
+            "https://9xcongit.com/the-crowd-effect-in-sales/",
+            "https://9xcongit.com/increase-traffic-with-social-media-sharing-features/",
+            "https://9xcongit.com/making-money-online-mmo-massive-online-opportunity/",
+            "https://9xcongit.com/the-best-side-jobs-to-boost-your-income-from-home/",
+            "https://9xcongit.com/stay-ahead-of-your-competitors-with-a-professional-seo-company/",
+            "https://9xcongit.com/what-major-should-you-choose-to-create-million-view-content/",
+            "https://9xcongit.com/how-to-try-nvidia-gpu-free/",
+            "https://9xcongit.com/bitcoin/",
+            "https://9xcongit.com/how-to-mine-dogecoin/",
+            "https://9xcongit.com/how-to-create-free-46-vcpu-vps-with-root-access/",
+            "https://9xcongit.com/how-to-get-a-free-vps-with-root-access-8vcpu/"
+        ];
 
-        links.forEach(link => {
-            const href = link.href;
-            // Chỉ lấy các link chứa 'https://9xcongit.com/post/', loại bỏ wp-admin và link neo (#)
-            if (href && 
-                href.includes('https://9xcongit.com/post/') && 
-                !href.includes('wp-admin') && 
-                !href.includes('#')) {
-                 validLinks.push(href);
-            }
-        });
-
-        if (validLinks.length > 0) {
-            // Chọn một link ngẫu nhiên trong danh sách
-            const randomIndex = Math.floor(Math.random() * validLinks.length);
-            const nextUrl = validLinks[randomIndex];
-            
-            console.log("Auto Browser: Sẽ chuyển hướng đến -> " + nextUrl);
-            
-            // Chuyển hướng trong cùng 1 tab
-            window.location.href = nextUrl; 
-        } else {
-            console.log("Auto Browser: Không tìm thấy link bài viết nào, sẽ tải lại trang hiện tại.");
-            window.location.reload();
-        }
+        // Chọn một link ngẫu nhiên trong danh sách 30 link
+        const randomIndex = Math.floor(Math.random() * FIXED_LINKS.length);
+        const nextUrl = FIXED_LINKS[randomIndex];
+        
+        console.log("Auto Browser: Sẽ chuyển hướng đến -> " + nextUrl);
+        
+        // Chuyển hướng trong cùng 1 tab
+        window.location.href = nextUrl; 
+        
     }, waitTime); // Sử dụng biến thời gian ngẫu nhiên
 }
 
